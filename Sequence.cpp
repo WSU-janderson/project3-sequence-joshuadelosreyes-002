@@ -60,4 +60,48 @@ void Sequence::clear() {
  */
 void Sequence::erase(size_t position) {this->erase(position, 1);}
 
+/**
+ *	Creates an empty sequence (`size = 0`) or a sequence of `size` items
+ *	indexed from `0` to `size - 1`.
+ *	@param size Number of elements to create in a sequence.
+ */
+Sequence::Sequence(size_t size = 0) {
+	this->length = 0;
+	while (this->length < size) {
+		SequenceNode *newElem = new SequenceNode();
+		if (this->tail) {
+			this->tail->next = newElem;
+			newElem->prev = this->tail;
+		} else {
+			this->head = newElem;
+		}
+		this->tail = newElem;
+		++this->length;
+	}
+}
 
+/**
+ *	Creates a (deep) copy of sequence `s`.
+ */
+Sequence::Sequence(const Sequence &s) {
+	this->length = 0;
+	SequenceNode *current = s.head;
+	while (current) {
+		SequenceNode *newElem = new SequenceNode(current->item);
+		if (this->tail) {
+			this->tail->next = newElem;
+			newElem->prev = this->tail;
+		} else {
+			this->head = newElem;
+		}
+		this->tail = newElem;
+		++this->length;
+		current = current->next;
+	}
+}
+
+/**
+ *	Destroys all items in the sequence and release the memory
+ *	associated with the sequence.
+ */
+Sequence::~Sequence() {this->clear();}
