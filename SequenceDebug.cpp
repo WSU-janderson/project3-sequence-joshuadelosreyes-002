@@ -11,7 +11,7 @@
 using namespace std;
 
 int main() {
-    cout << "Your project is ready to go!" << endl;
+	cout << "Your project is ready to go!\n";
 
-    return 0;
+	return 0;
 }
