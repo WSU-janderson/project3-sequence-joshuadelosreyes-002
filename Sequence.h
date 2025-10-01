@@ -44,6 +44,9 @@ class Sequence {
 		 *	Number of elements in this Sequence.
 		 */
 		size_t length;
+
+		void check_empty() const;
+		void check_index(size_t index) const;
 };
 
 #endif

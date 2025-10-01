@@ -2,11 +2,25 @@
 #include "Sequence.h"
 
 /**
+ *	@throw `std::exception` - If the sequence is empty.
+ */
+void Sequence::check_empty() const {
+	if (this->empty()) {throw std::exception();}
+}
+
+/**
+ *	@throw `std::exception` - If the index is out of bounds of the sequence.
+ */
+void Sequence::check_index(size_t index) const {
+	if (index >= this->length) {throw std::exception();}
+}
+
+/**
  *	Returns the first element in the sequence.
  *	@throw `std::exception` - If the sequence is empty.
  */
 std::string Sequence::front() const {
-	if (this->empty()) {throw std::exception();}
+	this->check_empty();
 	return this->head->item;
 }
 
@@ -15,7 +29,7 @@ std::string Sequence::front() const {
  *	@throw `std::exception` - If the sequence is empty.
  */
 std::string Sequence::back() const {
-	if (this->empty()) {throw std::exception();}
+	this->check_empty();
 	return this->tail->item;
 }
 
