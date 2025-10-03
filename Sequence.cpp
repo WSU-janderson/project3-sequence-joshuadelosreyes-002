@@ -215,3 +215,44 @@ void Sequence::insert(size_t position, std::string item) {
 	}
 	++this->length;
 }
+
+/**
+ *	The current sequence is released and replaced by a (deep) copy of
+ *	sequence `s`.
+ *	@return `*this`
+ */
+Sequence & Sequence::operator=(const Sequence &s) {
+	if (this != &s) {
+		this->clear();
+		Sequence ss = Sequence(s);
+		this->length = ss.length;
+		this->head = ss.head;
+		this->tail = ss.tail;
+	}
+
+	return *this;
+}
+
+/**
+ *	The position must be between `0` and `size() - 1`.
+ *
+ *	Returns a reference to an item at index `position` in the sequence.
+ *	@throw `std::exception` - If the position is outside the bounds of the sequence.
+ */
+std::string & Sequence::operator[](size_t position) {
+	return this->node_at(position)->item;
+}
+
+/**
+ *	Outputs a string representation of this sequence in the form:
+ *	`<s[0], s[1], ..., s[size() - 1]>`
+ */
+std::ostream & operator<<(std::ostream &os, const Sequence &s) {
+	os << std::string{"<"};
+	for (SequenceNode *current = s.head; current; current = current->next) {
+		os << current->item;
+		if (current->next) {os << std::string{", "};}
+	}
+	os << std::string{">"};
+	return os;
+}
