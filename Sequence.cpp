@@ -56,9 +56,49 @@ void Sequence::clear() {
 
 /**
  *	The item is removed from the sequence, and the memory is released.
- *	@throw `std::exception` - If this method is called with an invalid exception.
+ *	@param position An index to remove an item at that position.
+ *	@throw `std::exception` - If this method is called with an invalid position.
  */
 void Sequence::erase(size_t position) {this->erase(position, 1);}
+
+/**
+ *	The items in the sequence from indices `position` to `position + (count - 1)` are
+ *	deleted and their memory released.
+ *	@param position An index to remove an item at that position.
+ *	@param count Number of elements to remove from this sequence.
+ *	@throw `std::exception` - If `position` or `position + (count - 1)` resolves to an
+ *		invalid index.
+ */
+void Sequence::erase(size_t position, size_t count) {
+	this->check_index(position);
+	this->check_index(position + (count - 1));
+
+	SequenceNode *current = this->tail;
+	size_t currentIndex = this->length - 1;
+
+	while (current && (currentIndex >= position + count)) {
+		current = current->prev;
+		--currentIndex;
+	}
+
+	while ((position <= currentIndex) && (currentIndex < this->length) && current) {
+		SequenceNode *prev = current->prev;
+		SequenceNode *next = current->next;
+		if (current == this->tail) {
+			this->pop_back();
+		} else {
+			if (next) {next->prev = prev;}
+			if (prev) {prev->next = next;}
+			if (current == this->head) {this->head = prev;}
+			delete current;
+			--this->length;
+		}
+		current = prev;
+		--currentIndex;
+	}
+
+	return;
+}
 
 /**
  *	Creates an empty sequence (`size = 0`) or a sequence of `size` items
@@ -105,3 +145,17 @@ Sequence::Sequence(const Sequence &s) {
  *	associated with the sequence.
  */
 Sequence::~Sequence() {this->clear();}
+
+/**
+ *	The item at the end of the sequence is deleted and the size of the sequence is
+ *	reduced by one.
+ *	@throw `std::exception` - If the sequence is empty.
+ */
+void Sequence::pop_back() {
+	this->check_empty();
+	SequenceNode *prev = this->tail->prev;
+	prev->next = nullptr;
+	delete this->tail;
+	this->tail = prev;
+	--this->length;
+}
