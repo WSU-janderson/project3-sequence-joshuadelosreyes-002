@@ -47,6 +47,7 @@ class Sequence {
 
 		void check_empty() const;
 		void check_index(size_t index) const;
+		SequenceNode * node_at(size_t index) const;
 };
 
 #endif

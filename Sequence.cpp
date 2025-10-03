@@ -16,6 +16,35 @@ void Sequence::check_index(size_t index) const {
 }
 
 /**
+ *	Returns a node located at `index`.
+ *
+ *	The traversion through nodes should take at most `length / 2` steps.
+ *	@throw `std::exception` - If this method is called with an invalid position.
+ */
+SequenceNode * Sequence::node_at(size_t index) const {
+	this->check_index(index);
+
+	SequenceNode *current;
+	size_t currentIndex;
+
+	if (index < (this->length / 2)) {
+		current = this->head;
+		currentIndex = 0;
+		while (current) {
+			if (currentIndex == index) {return current;}
+			else {current = current->next; ++currentIndex;}
+		}
+	} else {
+		current = this->tail;
+		currentIndex = this->length - 1;
+		while (current) {
+			if (currentIndex == index) {return current;}
+			else {current = current->prev; --currentIndex;}
+		}
+	}
+}
+
+/**
  *	Returns the first element in the sequence.
  *	@throw `std::exception` - If the sequence is empty.
  */
@@ -73,13 +102,8 @@ void Sequence::erase(size_t position, size_t count) {
 	this->check_index(position);
 	this->check_index(position + (count - 1));
 
-	SequenceNode *current = this->tail;
-	size_t currentIndex = this->length - 1;
-
-	while (current && (currentIndex >= position + count)) {
-		current = current->prev;
-		--currentIndex;
-	}
+	SequenceNode *current = this->node_at(position + (count - 1));
+	size_t currentIndex = position + (count - 1);
 
 	while ((position <= currentIndex) && (currentIndex < this->length) && current) {
 		SequenceNode *prev = current->prev;
@@ -127,15 +151,7 @@ Sequence::Sequence(const Sequence &s) {
 	this->length = 0;
 	SequenceNode *current = s.head;
 	while (current) {
-		SequenceNode *newElem = new SequenceNode(current->item);
-		if (this->tail) {
-			this->tail->next = newElem;
-			newElem->prev = this->tail;
-		} else {
-			this->head = newElem;
-		}
-		this->tail = newElem;
-		++this->length;
+		this->push_back(current->item);
 		current = current->next;
 	}
 }
@@ -147,6 +163,21 @@ Sequence::Sequence(const Sequence &s) {
 Sequence::~Sequence() {this->clear();}
 
 /**
+ *	The value of `item` is appended to the sequence.
+ */
+void Sequence::push_back(std::string item) {
+	SequenceNode *newElem = new SequenceNode(item);
+	if (this->tail) {
+		this->tail->next = newElem;
+		newElem->prev = this->tail;
+	} else {
+		this->head = newElem;
+	}
+	this->tail = newElem;
+	++this->length;
+}
+
+/**
  *	The item at the end of the sequence is deleted and the size of the sequence is
  *	reduced by one.
  *	@throw `std::exception` - If the sequence is empty.
@@ -154,8 +185,33 @@ Sequence::~Sequence() {this->clear();}
 void Sequence::pop_back() {
 	this->check_empty();
 	SequenceNode *prev = this->tail->prev;
-	prev->next = nullptr;
+	if (prev) {prev->next = nullptr;}
 	delete this->tail;
 	this->tail = prev;
 	--this->length;
+	if (this->empty()) {this->head = nullptr;}
+}
+
+/**
+ *	The position must be between `0` and `size() - 1`.
+ *
+ *	The value of `item` is inserted at `position` and the size of the sequence is
+ *	increased by one.
+ *	@throw `std::exception` - If the position is outside the bounds of the sequence.
+ */
+void Sequence::insert(size_t position, std::string item) {
+	this->check_index(position);
+	SequenceNode *newNode = new SequenceNode(item);
+	if (position == 0) {
+		newNode->next = this->head;
+		this->head->prev = newNode;
+		this->head = newNode;
+	} else {
+		SequenceNode *current = this->node_at(position);
+		newNode->next = current;
+		newNode->prev = current->prev;
+		current->prev->next = newNode;
+		current->next->prev = newNode;
+	}
+	++this->length;
 }
