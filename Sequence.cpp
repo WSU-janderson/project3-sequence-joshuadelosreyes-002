@@ -1,3 +1,11 @@
+/**
+ *	Sequence.cpp
+ *	Project 3
+ *	CS 3100
+ *
+ *	Definition of all methods belonging to the Sequence class.
+ */
+
 #include <exception>
 #include "Sequence.h"
 

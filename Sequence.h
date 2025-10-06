@@ -1,3 +1,13 @@
+/**
+ *	Sequence.h
+ *	Project 3
+ *	CS 3100
+ *
+ *	The Sequence class is implemented as a double-linked list. Because it is a linked list,
+ *	it contains objects from another class called nodes, which hold an element of type
+ *	std::string.
+ */
+
 #ifndef SEQUENCE_H
 #define SEQUENCE_H
 

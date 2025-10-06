@@ -1,3 +1,12 @@
+/**
+ *	SequenceNode.cpp
+ *	Project 3
+ *	CS 3100
+ *
+ *	Because the Sequence class is implemented as a linked list, each node
+ *	has pointers leading to the previous and next nodes.
+ */
+
 #include <string>
 
 class SequenceNode {

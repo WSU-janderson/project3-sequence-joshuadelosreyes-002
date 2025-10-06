@@ -1,15 +1,16 @@
 /**
- * SequenceTestHarness.cpp
- * CS 3100
- * Project 3
+ *	SequenceTestHarness.cpp
+ *	CS 3100
+ *	Project 3
  *
- * This source file contains the test harness used when grading the Sequence project.
+ *	This source file contains the test harness used when grading the Sequence project.
  *
- * For students: DO NOT modify this file. If you cannot get your project to compile, it is not
- * because of this file. Also, modifying this file can give you false-positives or false-negatives
- * when running tests. To run this file in CLion, you need to select SequenceTestHarness from the drop-down
- * menu next to the Build (hammer) icon.
+ *	For students: DO NOT modify this file. If you cannot get your project to compile, it is not
+ *	because of this file. Also, modifying this file can give you false-positives or false-negatives
+ *	when running tests. To run this file in CLion, you need to select SequenceTestHarness from the drop-down
+ *	menu next to the Build (hammer) icon.
  */
+
 #include <iomanip>
 #include <iostream>
 
