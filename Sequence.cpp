@@ -88,7 +88,7 @@ size_t Sequence::size() const {return this->length;}
 void Sequence::clear() {
 	try {
 		this->erase(0, this->size());
-	} catch (std::exception e) {return;}
+	} catch (std::exception &e) {return;}
 }
 
 /**

@@ -38,19 +38,19 @@ int main() {
 		cout << "Getting first item on s1...\n";
 		cout << s1.front() << "\n";
 		cout << "s1 is not empty.\n";
-	} catch (exception e) {
+	} catch (exception &e) {
 		cout << "But s1 is empty.\n";
 	} try {
 		cout << "Getting last item on s1...\n";
 		cout << s1.back() << "\n";
 		cout << "s1 is not empty.\n";
-	} catch (exception e) {
+	} catch (exception &e) {
 		cout << "But s1 is empty.\n";
 	} try {
 		cout << "Removing the last item on s1...\n";
 		s1.pop_back();
 		cout << "s1 was not empty; new size: " << s1.size() << "\n";
-	} catch (exception e) {
+	} catch (exception &e) {
 		cout << "But s1 is empty.\n";
 	}
 
@@ -69,7 +69,7 @@ int main() {
 		try {
 			cout << "s2[" << i << "] = ";
 			cout << s2[i] << "\n";
-		} catch (exception e) {
+		} catch (exception &e) {
 			cout << "\ns2[" << i << "] does not exist.\n";
 		}
 	}
@@ -85,7 +85,7 @@ int main() {
 	try {
 		s2.insert(s2.size(), "inserted another");
 		cout << "Insertion exists at index equal to size or greater.\n";
-	} catch (exception e) {
+	} catch (exception &e) {
 		cout << "Cannot insert at indices >= size().\n";
 	}
 	cout << "\nContents of s2:\n" << s2 << "\n";
@@ -140,7 +140,7 @@ int main() {
 		s3.erase(8, 5);
 		cout << "Contents of s3: " << s3 << "\n";
 		cout << "Size: " << s3.size() << "\n\n";
-	} catch (exception e) {
+	} catch (exception &e) {
 		cout << "Attempting to erase elements of nonexistent indices.\n\n";
 	}
 	cout << "Erasing 3 elements starting at index 3.\n";
