@@ -232,10 +232,10 @@ void Sequence::insert(size_t position, std::string item) {
 Sequence & Sequence::operator=(const Sequence &s) {
 	if (this != &s) {
 		this->clear();
-		Sequence ss = Sequence(s);
-		this->length = ss.length;
-		this->head = ss.head;
-		this->tail = ss.tail;
+		Sequence *ss = new Sequence(s);
+		this->length = ss->length;
+		this->head = ss->head;
+		this->tail = ss->tail;
 	}
 
 	return *this;
